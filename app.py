@@ -11,12 +11,12 @@ bureau_score = st.sidebar.slider(
     "Bureau Score",
     300,
     850,
-    650
+    680
 )
 
 income = st.sidebar.number_input(
     "Annual Income",
-    value=50000
+    value=80000
 )
 
 dti = st.sidebar.slider(
@@ -30,13 +30,20 @@ utilization = st.sidebar.slider(
     "Utilization %",
     0,
     100,
-    40
+    30
 )
 
 past_dq = st.sidebar.number_input(
     "Past Delinquencies",
     min_value=0,
     max_value=10,
+    value=0
+)
+
+trade_num = st.sidebar.number_input(
+    "Additional trade lines",
+    min_value=0,
+    max_value=15,
     value=0
 )
 
@@ -49,17 +56,21 @@ age = st.sidebar.slider(
 
 # PD Model
 
-score_effect = -0.015*(bureau_score-640)
-util_effect = 0.02*(utilization-30)
-dti_effect = 0.035*(dti-30)
-dq_effect = past_dq
+score_effect =-0.005065*(bureau_score-680)
+util_effect = 0.044488*(utilization-30)
+dti_effect =  0.044417*(dti-30)
+dq_effect = 0.881483*past_dq
+trade_effect=0.116622*trade_num
+income_effect= -0.000008*income
 
 logit = (
-    -1.2
+    -0.0704
     + score_effect
     + util_effect
     + dti_effect
     + dq_effect
+    + trade_effect
+    + income_effect
 )
 
 pd_prob = 1/(1+np.exp(-logit))
@@ -67,7 +78,7 @@ pd_prob = 1/(1+np.exp(-logit))
 # Decision
 
 if (
-    bureau_score < 550
+    bureau_score < 500
     or dti > 60
     or past_dq >= 3
     or pd_prob > 0.60
