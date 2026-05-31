@@ -56,15 +56,15 @@ age = st.sidebar.slider(
 
 # PD Model
 
-score_effect =-0.005065*(bureau_score-680)
-util_effect = 0.044488*(utilization-30)
-dti_effect =  0.044417*(dti-30)
-dq_effect = 0.881483*past_dq
-trade_effect=0.116622*trade_num
-income_effect= -0.000008*income
+score_effect = -0.005031*(bureau_score-680)
+util_effect = 0.043913*(utilization-30)
+dti_effect =  0.044390*(dti-30)
+dq_effect = 0.862937*past_dq
+trade_effect= 0.124087*(trade_num-4)
+income_effect= -0.000008*(income-80000)
 
 logit = (
-    -0.0704
+    -0.84
     + score_effect
     + util_effect
     + dti_effect
