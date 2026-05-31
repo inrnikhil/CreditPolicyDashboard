@@ -91,19 +91,19 @@ else:
 
 if pd_prob <= 0.10:
     risk_tier = "Prime"
-    credit_line = 15000
+    credit_line = min(20000, max(income * 0.3, 5000))
 
 elif pd_prob <= 0.20:
     risk_tier = "Near Prime"
-    credit_line = 8000
+    credit_line = min(10000, max(income * 0.2, 3000))
 
 elif pd_prob <= 0.35:
     risk_tier = "Subprime"
-    credit_line = 3000
+    credit_line = min(7000, max(income*0.1, 2000))
 
 else:
     risk_tier = "Deep Subprime"
-    credit_line = 500
+    credit_line = max(500, min(income * 0.05, 1000))
 
 st.metric(
     "Probability of Default",
